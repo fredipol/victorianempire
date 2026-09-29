@@ -1,0 +1,2386 @@
+/* ============================================================
+   FONTS
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+
+/* ============================================================
+   GLOBAL
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: clamp(12px, 1.5vw, 28px);
+
+    font-family:
+        "Nunito",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f3efe6;
+
+    color: #263238;
+}
+
+
+/* ============================================================
+   MAIN GAME GRID
+   ============================================================ */
+
+#game {
+    display: grid;
+    width: 100%;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    max-width: 1920px;
+
+    margin: 0 auto;
+}
+
+
+/* Initial team-count setup */
+
+.game-setup {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 560px);
+    margin: clamp(36px, 13vh, 120px) auto;
+    padding: 34px;
+    border: 1px solid #d8d1c4;
+    border-radius: 16px;
+    background: #fffdf8;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(39, 49, 56, 0.1);
+}
+
+.setup-kicker {
+    color: #68777d;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.game-setup h1 {
+    margin: 8px 0;
+    color: #263f55;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.game-setup p {
+    margin: 0 auto 24px;
+    max-width: 420px;
+    color: #68777d;
+    line-height: 1.5;
+}
+
+.game-setup form {
+    display: grid;
+    gap: 10px;
+    text-align: left;
+}
+
+.game-setup label {
+    color: #344650;
+    font-weight: 800;
+}
+
+.game-setup select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #bdc8c8;
+    border-radius: 9px;
+    background: #fff;
+    color: #263238;
+    font: inherit;
+}
+
+.game-setup form button {
+    margin-top: 8px;
+    padding: 13px 18px;
+    border: 2px solid #1b3447;
+    border-radius: 10px;
+    background: #29465b;
+    color: #fffdf8;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #172936;
+}
+
+.game-setup form button:hover {
+    background: #203b50;
+}
+
+.tracker-utility-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tracker-tutorial-button {
+    margin-top: 5px;
+    padding: 8px 12px;
+    border: 1px solid #bdc8c8;
+    border-radius: 8px;
+    background: rgba(243, 239, 230, 0.65);
+    color: #53646a;
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+}
+
+.tracker-tutorial-button:hover {
+    background: #f3efe6;
+}
+
+.tutorial-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(25, 37, 44, 0.68);
+}
+
+.tutorial-highlight {
+    position: relative;
+    z-index: 1001;
+    border-radius: 10px;
+    background: #fffdf8;
+    box-shadow:
+        0 0 0 5px #e6b85c,
+        0 0 0 9px rgba(255, 253, 248, 0.9);
+}
+
+.tutorial-box {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    z-index: 1002;
+    width: min(440px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    padding: 22px 24px;
+    transform: translateX(-50%);
+    border: 1px solid #d8d1c4;
+    border-radius: 14px;
+    background: #fffdf8;
+    box-shadow: 0 8px 28px rgba(20, 31, 38, 0.24);
+}
+
+.welcome-card {
+    top: 50%;
+    bottom: auto;
+    width: min(560px, calc(100vw - 32px));
+    transform: translate(-50%, -50%);
+}
+
+.welcome-card-actions {
+    justify-content: flex-end;
+    margin-top: 22px;
+}
+
+.welcome-objectives {
+    margin: -6px 0 16px;
+    padding-left: 22px;
+    color: #53646a;
+    line-height: 1.5;
+}
+
+.welcome-objectives li + li {
+    margin-top: 8px;
+}
+
+.welcome-objectives strong {
+    color: #263f55;
+}
+
+.welcome-card-actions .tutorial-dismiss,
+.welcome-card-actions .tutorial-exit {
+    padding: 9px 14px;
+    border: 1px solid #c5cdd0;
+    border-radius: 8px;
+    background: #f3efe6;
+    color: #40525a;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-decoration: none;
+    box-shadow: none;
+}
+
+.welcome-card-actions .tutorial-dismiss:hover,
+.welcome-card-actions .tutorial-exit:hover {
+    background: #e9e3d8;
+    color: #263f55;
+    text-decoration: none;
+}
+
+.tutorial-box h2 {
+    margin: 6px 0 8px;
+    color: #263f55;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.tutorial-box p {
+    margin: 0 0 16px;
+    color: #53646a;
+    line-height: 1.5;
+}
+
+.tutorial-dismiss,
+.tutorial-back {
+    padding: 9px 16px;
+    border: 2px solid #1b3447;
+    border-radius: 8px;
+    background: #29465b;
+    color: #fffdf8;
+    font-family: "DM Serif Display", Georgia, serif;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #172936;
+}
+
+.tutorial-dismiss:hover,
+.tutorial-back:hover:not(:disabled) {
+    background: #203b50;
+}
+
+.tutorial-back:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.tutorial-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tutorial-exit {
+    padding: 8px 4px;
+    border: 0;
+    background: transparent;
+    color: #68777d;
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+}
+
+.tutorial-exit:hover {
+    color: #263f55;
+    text-decoration: underline;
+}
+
+.tutorial-action-hint {
+    margin: -4px 0 12px;
+    color: #68777d;
+    font-size: 0.84rem;
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   ROUND / PHASE TRACKER
+   ============================================================ */
+
+.game-status {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(130px, 1fr) minmax(0, 2.4fr) minmax(170px, 1fr);
+    align-items: center;
+    gap: 18px;
+    min-height: 94px;
+    padding: 10px 18px;
+
+    background: #fffdf8;
+
+    border:
+        1px solid
+        #d8d1c4;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 2px 6px rgba(39, 49, 56, 0.09);
+}
+
+
+/* Round and year */
+
+.round-number {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: #40545e;
+}
+
+.round-number strong {
+    font-weight: 900;
+
+    color: #344650;
+}
+
+.tracker-center {
+    min-width: 0;
+    text-align: center;
+}
+
+.tracker-game-title {
+    margin-bottom: 2px;
+    color: #607178;
+    font-size: 0.72rem;
+    line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+
+/* Main phase */
+
+.phase-title {
+    margin-top: 0;
+
+    font-family:
+        "DM Serif Display",
+        Georgia,
+        serif;
+
+    font-size: 1.55rem;
+
+    line-height: 1.08;
+
+    font-weight: 400;
+
+    letter-spacing: 0;
+
+    color: #263f55;
+}
+
+
+/* Phase instruction */
+
+.phase-instruction {
+    margin-top: 2px;
+
+    font-size: 0.86rem;
+
+    line-height: 1.2;
+
+    font-weight: 600;
+
+    color: #68777d;
+}
+
+
+/* ============================================================
+   TRADE TIMER
+   ============================================================ */
+
+.trade-timer {
+    display: inline-block;
+
+    margin-top: 5px;
+
+    padding:
+        3px
+        14px
+        4px;
+
+    border:
+        2px solid
+        #526773;
+
+    border-radius: 9px;
+
+    background: #edf1f0;
+
+    color: #263f4d;
+
+    font-family:
+        "Nunito",
+        Arial,
+        sans-serif;
+
+    font-size: 1.1rem;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: 0.04em;
+
+    font-variant-numeric: tabular-nums;
+
+    box-shadow:
+        0 2px 4px rgba(39, 49, 56, 0.10);
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Last minute */
+
+.trade-timer-warning {
+    border-color: #b47735;
+
+    background: #f5e8d4;
+
+    color: #7a4d1d;
+}
+
+
+/* Time has expired */
+
+.trade-timer-expired {
+    border-color: #a8443f;
+
+    background: #f0d9d7;
+
+    color: #7d302d;
+
+    transform: scale(1.04);
+}
+
+
+/* ============================================================
+   MAIN ACTION BUTTON
+   ============================================================ */
+
+.tracker-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.tracker-action button {
+    min-width: 160px;
+
+    padding:
+        12px
+        20px;
+
+    border:
+        2px solid
+        #1b3447;
+
+    border-radius: 10px;
+
+    background: #29465b;
+
+    color: #fffdf8;
+
+    font-family:
+        "DM Serif Display",
+        Georgia,
+        serif;
+
+    font-size: 1.05rem;
+
+    line-height: 1.1;
+
+    font-weight: 400;
+
+    letter-spacing: 0.025em;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 3px 0 #172936,
+        0 5px 10px rgba(35, 50, 60, 0.15);
+
+    transition:
+        transform 0.08s ease,
+        box-shadow 0.08s ease,
+        background 0.12s ease;
+}
+
+
+.tracker-action button:hover {
+    background: #203b50;
+}
+
+
+.tracker-action button:active {
+    transform: translateY(3px);
+
+    box-shadow:
+        0 0 0 #172936,
+        0 2px 4px rgba(35, 50, 60, 0.12);
+}
+
+
+/* ============================================================
+   TERRITORY CARDS
+   ============================================================ */
+
+.territory {
+    --territory-accent: #71818a;
+    position: relative;
+    align-self: start;
+
+    min-width: 0;
+    background: #fffdf8;
+
+    padding: 13px 15px 14px 17px;
+
+    border:
+        2px solid
+        rgba(42, 57, 64, 0.13);
+    border-left: 6px solid var(--territory-accent);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 3px 8px rgba(42, 57, 64, 0.10);
+
+    transition:
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.territory:hover {
+    box-shadow:
+        0 5px 12px rgba(42, 57, 64, 0.13);
+}
+
+
+/* Britain tracks money paid and received through trade */
+
+.britain-wealth-card {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 68px;
+    padding: 10px 22px;
+    border: 2px solid #aebdc0;
+    border-radius: 13px;
+    background: #e0e8e7;
+    color: #263f4d;
+    box-shadow: 0 2px 6px rgba(39, 49, 56, 0.08);
+}
+
+.britain-wealth-card h2 {
+    margin: 0;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 400;
+}
+
+.britain-wealth-value {
+    font-size: 1.4rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+}
+
+
+.territory.development-highlight {
+    animation: development-success-highlight 1.1s ease-out;
+}
+
+
+@keyframes development-success-highlight {
+    0% {
+        outline: 0 solid rgba(111, 143, 82, 0);
+        outline-offset: 0;
+    }
+
+    30% {
+        outline: 4px solid rgba(111, 143, 82, 0.9);
+        outline-offset: 3px;
+        box-shadow: 0 0 20px rgba(111, 143, 82, 0.42);
+    }
+
+    100% {
+        outline: 0 solid rgba(111, 143, 82, 0);
+        outline-offset: 5px;
+        box-shadow: 0 3px 8px rgba(42, 57, 64, 0.10);
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    .territory.development-highlight {
+        animation-duration: 0.01ms;
+    }
+}
+
+
+/* ============================================================
+   TERRITORY COLOUR PALETTE
+   ============================================================ */
+
+.territory-india {
+    --territory-accent: #5384a8;
+}
+
+.territory-canada {
+    --territory-accent: #668b50;
+}
+
+.territory-ceylon {
+    --territory-accent: #b38b37;
+}
+
+.territory-jamaica {
+    --territory-accent: #8c6398;
+}
+
+.territory-australia {
+    --territory-accent: #bf7842;
+}
+
+.territory-newZealand {
+    --territory-accent: #4f8e8a;
+}
+
+.territory-egypt {
+    --territory-accent: #829342;
+}
+
+.territory-goldCoast {
+    --territory-accent: #ad6262;
+}
+
+
+/* ============================================================
+   UNREST
+   ============================================================ */
+
+.territory.has-unrest {
+    border: 3px solid #a8443f;
+    border-left: 6px solid var(--territory-accent);
+
+    box-shadow:
+        0 3px 10px rgba(120, 45, 40, 0.22);
+
+    background:
+        linear-gradient(
+            to bottom,
+            #fff8f7,
+            #fffdf8
+        );
+}
+
+
+/* ============================================================
+   TERRITORY NAME
+   ============================================================ */
+
+.territory h2 {
+    margin:
+        0 0 3px;
+
+    text-align: center;
+
+    font-family:
+        "DM Serif Display",
+        Georgia,
+        serif;
+
+    font-size: 1.72rem;
+
+    line-height: 1.05;
+
+    font-weight: 400;
+
+    letter-spacing: 0;
+
+    color: #263f4d;
+}
+
+
+/* ============================================================
+   DEVELOPMENT INDICATOR
+   ============================================================ */
+
+.development-indicator {
+    display: block;
+
+    width: fit-content;
+
+    margin:
+        0 auto 9px;
+
+    padding:
+        4px
+        11px;
+
+    border:
+        1px solid
+        #bdc6c7;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 253, 248, 0.78);
+
+    color: #59686d;
+
+    font-size: 0.75rem;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: 0.01em;
+
+    cursor: help;
+}
+
+
+.development-indicator:focus-visible {
+    outline: 2px solid #536f50;
+    outline-offset: 2px;
+}
+
+
+.develop-button {
+    display: block;
+
+    margin: 0 auto 12px;
+
+    padding: 8px 14px;
+
+    border: 1px solid #697f59;
+    border-radius: 7px;
+
+    background: #e3ead8;
+    color: #34492c;
+
+    font-family: "Nunito", Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.025em;
+
+    cursor: pointer;
+}
+
+.develop-button-cost {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+
+.develop-button:hover {
+    background: #d6e2c9;
+    border-color: #536a43;
+}
+
+.develop-button:disabled {
+    border-color: #c5c9c1;
+    background: #e9eae6;
+    color: #7a817b;
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+.develop-button:disabled:hover {
+    border-color: #c5c9c1;
+    background: #e9eae6;
+}
+
+
+/* ============================================================
+   UNREST INDICATOR
+   ============================================================ */
+
+.unrest-indicator {
+    margin:
+        -3px
+        auto
+        11px;
+
+    padding:
+        5px
+        11px;
+
+    width: fit-content;
+
+    border:
+        1px solid
+        #c26a65;
+
+    border-radius: 6px;
+
+    background: #f0d1cf;
+
+    color: #7d302d;
+
+    text-align: center;
+
+    font-size: 0.78rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.07em;
+
+    cursor: help;
+}
+
+
+.unrest-indicator:focus-visible {
+    outline: 2px solid #7d302d;
+    outline-offset: 2px;
+}
+
+
+/* ============================================================
+   MONEY SECTION
+   ============================================================ */
+
+.territory > p {
+    margin:
+        7px
+        0
+        9px;
+
+    font-size: 0.96rem;
+
+    font-weight: 700;
+
+    color: #34454c;
+}
+
+
+/* Money controls */
+
+.territory > p button {
+    width: 30px;
+
+    height: 30px;
+
+    padding: 0;
+
+    margin-left: 5px;
+
+    border:
+        1px solid
+        #aeb8ba;
+
+    border-radius: 6px;
+
+    background:
+        rgba(255, 253, 248, 0.88);
+
+    color: #34454c;
+
+    font-family:
+        "Nunito",
+        Arial,
+        sans-serif;
+
+    font-size: 1rem;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+.territory > p button:hover {
+    background: #fffdf8;
+
+    border-color: #738187;
+}
+
+
+/* ============================================================
+   SECTION HEADINGS
+   ============================================================ */
+
+.territory h3 {
+    margin:
+        14px
+        0
+        7px;
+
+    padding:
+        0
+        0
+        5px;
+
+    border-bottom:
+        1px solid
+        rgba(50, 65, 72, 0.16);
+
+    font-size: 0.76rem;
+
+    line-height: 1.2;
+
+    font-weight: 900;
+
+    letter-spacing: 0.055em;
+
+    text-transform: uppercase;
+
+    color: #52636a;
+}
+
+
+/* ============================================================
+   RESOURCE TOTALS
+   ============================================================ */
+
+.resource-totals-section h3 {
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+.need-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+    min-height: 31px;
+    padding: 3px 5px;
+    border-radius: 6px;
+    color: #435157;
+    font-size: 0.88rem;
+    line-height: 1.2;
+}
+
+.need-row + .need-row {
+    margin-top: 2px;
+}
+
+.need-amount {
+    min-width: 45px;
+    color: #26383f;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.need-amount span {
+    color: #879398;
+    font-weight: 600;
+}
+
+.need-hint {
+    display: block;
+
+    color: #68777c;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.tax-payment-summary {
+    margin: 2px 0 10px;
+    padding: 6px 9px;
+    border-left: 3px solid #a88445;
+    border-radius: 4px;
+    background: rgba(255, 253, 248, 0.58);
+    color: #59645e;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   RESOURCE ROWS
+   ============================================================ */
+
+.resource-row {
+    position: relative;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    min-height: 34px;
+
+    font-size: 0.94rem;
+
+    font-weight: 600;
+}
+
+.resource-row::before {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: -8px;
+    width: 3px;
+    border-radius: 3px;
+    content: "";
+}
+
+.resource-row-food::before {
+    background: #2e7d5b;
+}
+
+.resource-row-manufactured::before {
+    background: #466e9f;
+}
+
+.resource-row-luxury::before {
+    background: #925b85;
+}
+
+
+.resource-row > span.resource-name {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.resource-category-key {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px;
+    flex: 0 0 auto;
+    margin-left: 8px;
+    font-size: 0.62rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.resource-category-key > span {
+    padding: 4px 6px;
+    border-radius: 999px;
+    background: rgba(255, 253, 248, 0.86);
+}
+
+.resource-key-food {
+    color: #2e7d5b;
+}
+
+.resource-key-manufactured {
+    color: #466e9f;
+}
+
+.resource-key-luxury {
+    color: #925b85;
+}
+
+
+.resource-row > span:last-child {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.resource-row strong {
+    display: inline-block;
+
+    min-width: 30px;
+
+    text-align: center;
+
+    font-size: 1rem;
+
+    font-weight: 900;
+
+    color: #26383f;
+}
+
+
+/* ============================================================
+   RESOURCE +/- BUTTONS
+   ============================================================ */
+
+.resource-row button {
+    width: 28px;
+
+    height: 28px;
+
+    padding: 0;
+
+    border:
+        1px solid
+        #aeb8ba;
+
+    border-radius: 5px;
+
+    background:
+        rgba(255, 253, 248, 0.82);
+
+    color: #34454c;
+
+    font-family:
+        "Nunito",
+        Arial,
+        sans-serif;
+
+    font-size: 1rem;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background 0.1s ease,
+        border-color 0.1s ease;
+}
+
+
+.resource-row button:hover {
+    background: #fffdf8;
+
+    border-color: #738187;
+}
+
+
+.resource-row button.sell-resource-button {
+    width: auto;
+    min-width: 76px;
+    padding: 0 7px;
+
+    border-color: #789174;
+    background: #e5ecdf;
+    color: #344c35;
+
+    font-size: 0.68rem;
+    white-space: nowrap;
+}
+
+
+.resource-row button.sell-resource-button:hover:not(:disabled) {
+    border-color: #536f50;
+    background: #d8e5d1;
+}
+
+
+.resource-row button.sell-resource-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+
+.trade-sales-summary {
+    margin-top: 9px;
+    padding: 8px 10px;
+
+    border: 1px solid #a7b99f;
+    border-radius: 7px;
+
+    background: #edf3e9;
+    color: #344c35;
+
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+
+.resource-trade-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: 11px;
+    padding: 8px 9px 0;
+
+    color: #53646a;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.resource-trade-heading .resource-category-key {
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+
+/* ============================================================
+   PURCHASE SECTION
+   ============================================================ */
+
+.purchase-section {
+    margin-top: 14px;
+
+    padding-top: 10px;
+
+    border-top:
+        1px solid
+        rgba(50, 65, 72, 0.16);
+}
+
+
+.purchase-section h3 {
+    margin:
+        0
+        0
+        8px;
+}
+
+
+/* ============================================================
+   PURCHASE BUTTONS
+   ============================================================ */
+
+.purchase-section button {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: 100%;
+
+    margin-bottom: 7px;
+
+    padding:
+        9px
+        12px;
+
+    border:
+        1px solid
+        #91a0a5;
+
+    border-radius: 7px;
+
+    background:
+        rgba(255, 253, 248, 0.82);
+
+    color: #344a54;
+
+    font-family:
+        "Nunito",
+        Arial,
+        sans-serif;
+
+    font-size: 0.88rem;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background 0.1s ease,
+        border-color 0.1s ease,
+        box-shadow 0.1s ease,
+        transform 0.08s ease;
+}
+
+
+.purchase-section button:hover:not(:disabled) {
+    background: #fffdf8;
+
+    border-color: #5d727b;
+
+    box-shadow:
+        0 2px 4px rgba(40, 55, 62, 0.10);
+}
+
+
+.purchase-section button:active:not(:disabled) {
+    transform: translateY(1px);
+
+    box-shadow: none;
+}
+
+
+.purchase-section button:disabled {
+    opacity: 0.38;
+
+    cursor: not-allowed;
+
+    background:
+        rgba(255, 253, 248, 0.45);
+
+    border-color:
+        rgba(100, 115, 120, 0.35);
+}
+
+
+/* ============================================================
+   RESOURCE EXPANDER
+   ============================================================ */
+
+.resource-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    gap: 8px;
+
+    margin-top: 10px;
+
+    padding:
+        8px
+        10px;
+
+    border:
+        1px solid
+        rgba(52, 69, 76, 0.28);
+
+    border-radius: 7px;
+
+    background:
+        rgba(255, 253, 248, 0.52);
+
+    color: #53646a;
+
+    font-family:
+        "Nunito",
+        Arial,
+        sans-serif;
+
+    font-size: 0.84rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.01em;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.1s ease,
+        border-color 0.1s ease;
+}
+
+
+.resource-toggle:hover {
+    background:
+        rgba(255, 253, 248, 0.85);
+
+    border-color:
+        rgba(52, 69, 76, 0.42);
+}
+
+
+/* ============================================================
+   RESOURCE DETAILS
+   ============================================================ */
+
+.resource-details {
+    display: none;
+
+    margin-top: 9px;
+
+    padding:
+        8px
+        9px;
+
+    border:
+        1px solid
+        rgba(50, 65, 72, 0.10);
+
+    border-radius: 7px;
+
+    background:
+        rgba(255, 253, 248, 0.36);
+}
+
+
+.resource-details.expanded {
+    display: block;
+}
+
+
+/* ============================================================
+   PRODUCTION / CONSUMPTION REPORTS
+   ============================================================ */
+
+.territory-report {
+    margin-top: 7px;
+}
+
+
+.report-title {
+    margin:
+        3px
+        0
+        10px;
+
+    padding:
+        7px
+        8px;
+
+    border-radius: 6px;
+
+    background:
+        rgba(255, 253, 248, 0.58);
+
+    text-align: center;
+
+    font-size: 0.8rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.07em;
+
+    color: #52636a;
+}
+
+
+/* ============================================================
+   REPORT LINES
+   ============================================================ */
+
+.report-line {
+    display: flex;
+
+    align-items: center;
+
+    min-height: 34px;
+
+    margin-bottom: 4px;
+
+    padding:
+        5px
+        9px;
+
+    border-radius: 6px;
+
+    background:
+        rgba(255, 253, 248, 0.35);
+
+    font-size: 0.96rem;
+
+    font-weight: 650;
+}
+
+
+.report-line strong {
+    margin-right: 6px;
+
+    font-size: 1.05rem;
+
+    font-weight: 900;
+}
+
+
+.report-line.positive {
+    color: #2f6139;
+
+    background:
+        rgba(218, 235, 218, 0.72);
+}
+
+
+.report-line.negative {
+    color: #743a37;
+
+    background:
+        rgba(239, 216, 214, 0.72);
+}
+
+
+/* ============================================================
+   INCOME
+   ============================================================ */
+
+.money-generated {
+    margin-top: 9px;
+
+    padding-top: 10px;
+
+    border-top:
+        1px solid
+        rgba(50, 65, 72, 0.14);
+
+    background: transparent;
+
+    font-size: 1rem;
+}
+
+
+.money-generated strong {
+    font-size: 1.15rem;
+
+    font-weight: 900;
+
+    color: #29465b;
+}
+
+
+/* ============================================================
+   NEEDS STATUS
+   ============================================================ */
+
+.needs-status {
+    margin-top: 12px;
+
+    padding:
+        10px
+        11px;
+
+    border-radius: 7px;
+
+    text-align: center;
+
+    font-size: 0.92rem;
+
+    line-height: 1.35;
+
+    font-weight: 800;
+}
+
+
+.needs-met {
+    border:
+        1px solid
+        #afc7b1;
+
+    background: #e0ebdf;
+
+    color: #315c37;
+}
+
+
+.needs-not-met {
+    border:
+        1px solid
+        #d0aaa7;
+
+    background: #f0d9d7;
+
+    color: #733936;
+}
+
+
+/* ============================================================
+   MISSING NEEDS
+   ============================================================ */
+
+.needs-missing {
+    margin-top: 7px;
+
+    font-size: 0.83rem;
+
+    line-height: 1.55;
+
+    font-weight: 650;
+}
+
+
+/* ============================================================
+   FOCUS STATES
+   ============================================================ */
+
+button:focus-visible {
+    outline:
+        3px solid
+        rgba(47, 91, 123, 0.45);
+
+    outline-offset: 2px;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1100px) {
+
+    #game {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .game-status {
+        grid-template-columns: minmax(110px, 1fr) minmax(0, 2fr) minmax(145px, 1fr);
+        gap: 10px;
+        padding: 10px 12px;
+    }
+
+    .tracker-action button {
+        min-width: 135px;
+        padding: 11px 12px;
+        font-size: 0.95rem;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 10px;
+    }
+
+
+    #game {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+
+    .game-status {
+        grid-template-columns: 1fr auto;
+        gap: 6px 10px;
+        padding: 10px 12px;
+    }
+
+    .round-number {
+        grid-column: 1;
+        grid-row: 1;
+        font-size: 0.85rem;
+    }
+
+    .tracker-action {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .tracker-center {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+
+    .phase-title {
+        font-size: 1.4rem;
+    }
+
+    .tracker-game-title {
+        font-size: 0.64rem;
+    }
+
+    .phase-instruction {
+        font-size: 0.8rem;
+    }
+
+    .tracker-action button {
+        min-width: 0;
+        padding: 9px 12px;
+        font-size: 0.82rem;
+    }
+
+
+    .trade-timer {
+        font-size: 1.4rem;
+
+        padding:
+            5px
+            15px;
+    }
+
+
+    .territory {
+        padding:
+            14px;
+    }
+
+}
+
+
+/* ============================================================
+   DARK THEME
+   ============================================================ */
+
+body {
+    background: #111820;
+    color: #e7edf0;
+}
+
+.game-setup,
+.game-status,
+.territory,
+.tutorial-box {
+    background: #202b35;
+    border-color: #3a4a56;
+    color: #e7edf0;
+}
+
+.territory {
+    background: #202b35;
+    border-left-color: var(--territory-accent);
+}
+
+.territory-india {
+    --territory-accent: #39799b;
+}
+
+.territory-canada {
+    --territory-accent: #4d784c;
+}
+
+.territory-ceylon {
+    --territory-accent: #90702e;
+}
+
+.territory-jamaica {
+    --territory-accent: #80528a;
+}
+
+.territory-australia {
+    --territory-accent: #a45e32;
+}
+
+.territory-newZealand {
+    --territory-accent: #347f78;
+}
+
+.territory-egypt {
+    --territory-accent: #6c8034;
+}
+
+.territory-goldCoast {
+    --territory-accent: #974f57;
+}
+
+.game-setup h1,
+.tutorial-box h2,
+.welcome-objectives strong,
+.welcome-card-actions .tutorial-exit:hover,
+.phase-title,
+.territory h2,
+.britain-wealth-card h2 {
+    color: #f0d59a;
+}
+
+.setup-kicker,
+.game-setup p,
+.tutorial-box p,
+.welcome-objectives,
+.round-number,
+.round-number strong,
+.tracker-game-title,
+.phase-instruction,
+.tutorial-exit,
+.tutorial-action-hint {
+    color: #bac6cd;
+}
+
+.game-setup label,
+.territory > p,
+.need-row,
+.territory h3,
+.resource-trade-heading,
+.report-title {
+    color: #d8e1e5;
+}
+
+.game-setup select,
+.tracker-tutorial-button,
+.welcome-card-actions .tutorial-exit,
+.resource-toggle,
+.purchase-section button,
+.territory > p button,
+.resource-row button {
+    background: #293741;
+    border-color: #50616d;
+    color: #e7edf0;
+}
+
+.game-setup select:focus,
+.tracker-tutorial-button:hover,
+.resource-toggle:hover,
+.purchase-section button:hover:not(:disabled),
+.territory > p button:hover,
+.resource-row button:hover {
+    background: #344651;
+    border-color: #81929c;
+}
+
+.game-setup form button,
+.tutorial-dismiss,
+.tutorial-back,
+.tracker-action button {
+    background: #31536a;
+    border-color: #66849a;
+    color: #f5f7f8;
+}
+
+.game-setup form button:hover,
+.tutorial-dismiss:hover,
+.tutorial-back:hover:not(:disabled),
+.tracker-action button:hover {
+    background: #3c657f;
+}
+
+.welcome-card-actions .tutorial-dismiss,
+.welcome-card-actions .tutorial-exit {
+    background: #293741;
+    border-color: #50616d;
+    color: #e7edf0;
+}
+
+.welcome-card-actions .tutorial-dismiss:hover,
+.welcome-card-actions .tutorial-exit:hover {
+    background: #344651;
+    color: #fff;
+}
+
+.tutorial-highlight {
+    background: #293741;
+    box-shadow: 0 0 0 5px #e6b85c, 0 0 0 9px rgba(17, 24, 32, 0.9);
+}
+
+.tutorial-overlay {
+    background: rgba(4, 8, 12, 0.78);
+}
+
+.trade-timer {
+    background: #293741;
+    border-color: #657984;
+    color: #f0d59a;
+}
+
+.trade-timer-warning {
+    background: #493a27;
+    border-color: #c3924b;
+    color: #f2d39b;
+}
+
+.trade-timer-expired,
+.unrest-indicator {
+    background: #4c292b;
+    border-color: #c66c6c;
+    color: #ffd6d3;
+}
+
+.territory.has-unrest {
+    background: linear-gradient(to bottom, #39272a, var(--territory-surface, #202b35));
+}
+
+.development-indicator {
+    background: #2c3943;
+    border-color: #53636d;
+    color: #d2dce1;
+}
+
+.develop-button {
+    background: #354636;
+    border-color: #77946a;
+    color: #e3f0dc;
+}
+
+.develop-button:hover {
+    background: #405640;
+    border-color: #9bb88b;
+}
+
+.develop-button:disabled,
+.develop-button:disabled:hover {
+    background: #303940;
+    border-color: #4b565e;
+    color: #a2adb3;
+}
+
+.territory h3 {
+    border-color: #465660;
+}
+
+.need-amount,
+.resource-row strong {
+    color: #f0f3f4;
+}
+
+.need-amount span {
+    color: #9eabb2;
+}
+
+.need-hint,
+.resource-trade-heading {
+    color: #bac6cd;
+}
+
+.resource-category-key > span {
+    background: #293741;
+}
+
+.resource-key-food {
+    color: #74c69d;
+}
+
+.resource-key-manufactured {
+    color: #8cb9f0;
+}
+
+.resource-key-luxury {
+    color: #d69ad0;
+}
+
+.resource-row-food::before {
+    background: #55ad80;
+}
+
+.resource-row-manufactured::before {
+    background: #6d9ed7;
+}
+
+.resource-row-luxury::before {
+    background: #b678ae;
+}
+
+.resource-row button.sell-resource-button {
+    background: #304538;
+    border-color: #62856b;
+    color: #d8f0dc;
+}
+
+.resource-row button.sell-resource-button:hover:not(:disabled) {
+    background: #3b5844;
+    border-color: #86ab8e;
+}
+
+.resource-row button.sell-resource-button:disabled,
+.purchase-section button:disabled {
+    background: #252f36;
+    border-color: #3c4951;
+    color: #89969d;
+    opacity: 0.72;
+}
+
+.trade-sales-summary,
+.tax-payment-summary {
+    background: #293b31;
+    border-color: #5b8066;
+    color: #d4e8d7;
+}
+
+.resource-details {
+    background: #1a242c;
+    border-color: #394953;
+}
+
+.report-title,
+.report-line {
+    background: #293741;
+}
+
+.report-line.positive {
+    background: #263d31;
+    color: #bce5c6;
+}
+
+.report-line.negative {
+    background: #432c2e;
+    color: #f0c1bd;
+}
+
+.money-generated {
+    border-color: #465660;
+    color: #d8e1e5;
+}
+
+.money-generated strong {
+    color: #f0d59a;
+}
+
+.needs-met {
+    background: #263d31;
+    border-color: #5b8066;
+    color: #bce5c6;
+}
+
+.needs-not-met {
+    background: #432c2e;
+    border-color: #8f5553;
+    color: #f0c1bd;
+}
+
+.britain-wealth-card {
+    background: #263943;
+    border-color: #526c78;
+    color: #f0d59a;
+}
+
+button:focus-visible,
+.development-indicator:focus-visible,
+.unrest-indicator:focus-visible {
+    outline-color: #73c9f2;
+}
+
+.territory h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.territory-emblem {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    border: 1px solid var(--territory-accent);
+    border-radius: 50%;
+    background: #293741;
+    color: var(--territory-accent);
+}
+
+.territory-emblem svg {
+    display: block;
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   WARM CLASSROOM POLISH
+   ============================================================ */
+
+body {
+    background: #151b22;
+    color: #e7edf0;
+}
+
+.game-setup,
+.game-status,
+.tutorial-box {
+    background: #242e38;
+    border-color: #3d4b56;
+    color: #e7edf0;
+}
+
+.territory {
+    background: #202a33;
+    border-top-color: #394853;
+    border-right-color: #394853;
+    border-bottom-color: #394853;
+}
+
+.territory.has-unrest {
+    background: linear-gradient(to bottom, #39292c, #202a33);
+}
+
+.phase-title,
+.game-setup h1,
+.tutorial-box h2,
+.territory h2,
+.britain-wealth-card h2 {
+    color: #f2d79d;
+}
+
+.phase-instruction {
+    margin-top: 5px;
+    color: #e8d5af;
+    font-size: 1rem;
+    line-height: 1.35;
+    font-weight: 750;
+}
+
+.tracker-action button {
+    min-width: 190px;
+    padding: 16px 24px;
+    border-color: #f0ce88;
+    background: #e4bd73;
+    color: #26271f;
+    font-family: "Nunito", Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: capitalize;
+    box-shadow: 0 3px 0 #977742, 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tracker-action button:hover {
+    background: #f0ce88;
+}
+
+.game-status {
+    min-height: 106px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.round-number {
+    font-size: 1.2rem;
+    gap: 5px;
+}
+
+.round-number strong {
+    font-size: 1.25rem;
+}
+
+.tracker-action button:active {
+    box-shadow: 0 0 0 #977742, 0 2px 4px rgba(0, 0, 0, 0.16);
+}
+
+.territory h3 {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 11px;
+    margin-bottom: 6px;
+    border-color: #3d4b56;
+    color: #d8e1e5;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+.need-heading-hint {
+    color: #aebcc4;
+    font-size: 0.68rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.territory-briefing .resource-toggle {
+    border-color: var(--territory-accent);
+}
+
+.territory-briefing .resource-details {
+    display: block;
+}
+
+.need-row {
+    min-height: 34px;
+    color: #e0e7ea;
+    font-size: 0.95rem;
+}
+
+.briefing-needs-list {
+    display: grid;
+    gap: 2px;
+}
+
+.briefing-need {
+    display: flex;
+    align-items: center;
+    min-height: 29px;
+    padding: 2px 5px;
+    color: #e0e7ea;
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+.territory-production-preview {
+    margin: 7px 0 10px;
+    padding: 8px 10px;
+    border-left: 3px solid var(--territory-accent);
+    border-radius: 5px;
+    background: rgba(12, 20, 27, 0.42);
+}
+
+.territory-production-preview h3,
+.territory .starting-resources-heading {
+    margin: 0 0 7px;
+    padding: 0;
+    border: 0;
+    color: #e3dac8;
+    font-size: 0.86rem;
+}
+
+.production-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.production-preview-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 27px;
+    padding: 3px 8px 3px 17px;
+    border: 1px solid #3d4b56;
+    border-radius: 5px;
+    background: #2b3740;
+    color: #e0e7ea;
+    font-size: 0.82rem;
+    font-weight: 650;
+}
+
+.production-preview-item::before {
+    position: absolute;
+    left: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    content: "";
+}
+
+.production-preview-item.produces-food::before {
+    background: #74c69d;
+}
+
+.production-preview-item.produces-manufactured::before {
+    background: #8cb9f0;
+}
+
+.production-preview-item.produces-luxury::before {
+    background: #d69ad0;
+}
+
+.production-preview-item strong {
+    color: #f3d18c;
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.need-label::before {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 8px;
+    border-radius: 50%;
+    content: "";
+    vertical-align: 1px;
+}
+
+.need-food .need-label::before,
+.resource-key-food::before {
+    background: #74c69d;
+}
+
+.need-manufactured .need-label::before,
+.resource-key-manufactured::before {
+    background: #8cb9f0;
+}
+
+.need-luxury .need-label::before,
+.resource-key-luxury::before {
+    background: #d69ad0;
+}
+
+.resource-category-key > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #303b44;
+}
+
+.resource-category-key > span::before {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    content: "";
+}
+
+.development-indicator {
+    background: #2b3740;
+    border-color: #4b5b66;
+    color: #dce4e8;
+    font-size: 0.82rem;
+}
+
+.territory-resource-context {
+    margin: 8px 0 10px;
+    padding: 8px 10px;
+    height: 108px;
+    border-left: 3px solid var(--territory-accent);
+    border-radius: 5px;
+    background: rgba(12, 20, 27, 0.42);
+    text-align: left;
+}
+
+@media (max-width: 650px) {
+    .territory-resource-context {
+        height: 126px;
+    }
+}
+
+.territory-resource-context p {
+    margin: 0;
+    color: #d5dfe3;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.resource-toggle,
+.purchase-section button,
+.territory > p button,
+.resource-row button {
+    background: #2b3740;
+    border-color: #4b5b66;
+    color: #e7edf0;
+}
+
+.resource-toggle:hover,
+.purchase-section button:hover:not(:disabled),
+.territory > p button:hover,
+.resource-row button:hover {
+    background: #36454f;
+    border-color: #687b87;
+}
+
+.resource-details {
+    background: #1b242b;
+    border-color: #394853;
+}
+
+.game-setup p,
+.tutorial-box p,
+.round-number,
+.round-number strong,
+.tracker-game-title,
+.resource-trade-heading {
+    color: #c6d1d7;
+}
+
+.britain-wealth-card {
+    background: #2b3941;
+    border-color: #526973;
+    color: #f2d79d;
+}
+
+@media (max-width: 1100px) {
+    .tracker-action button {
+        min-width: 150px;
+        padding: 13px 16px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .tracker-action button {
+        min-width: 0;
+        padding: 11px 13px;
+        font-size: 0.9rem;
+    }
+}
