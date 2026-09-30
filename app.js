@@ -864,14 +864,49 @@ function getResourceTotals(
 // 13. CHANGE MONEY
 // ============================================================
 
+const coinClinkSound = new Audio("sounds/coin-clink.mp3");
+coinClinkSound.preload = "auto";
+
+const gameSounds = {
+    action: new Audio("sounds/action-click.mp3"),
+    develop: new Audio("sounds/develop.mp3"),
+    unrest: new Audio("sounds/unrest.mp3"),
+    resource: new Audio("sounds/resource-pop.mp3")
+};
+
+function playGameSound(name, volume = 1) {
+
+    const sound = gameSounds[name];
+
+    if (!sound) {
+
+        return;
+
+    }
+
+    sound.volume = volume;
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+
+}
+
 function changeMoney(
     territoryID,
     amount
 ) {
 
+    if (gameState.phase !== "trade") {
+
+        return;
+
+    }
+
     territories[
         territoryID
     ].money += amount;
+
+    coinClinkSound.currentTime = 0;
+    coinClinkSound.play().catch(() => {});
 
 
     displayGame();
@@ -888,6 +923,12 @@ function changeResource(
     resourceID,
     amount
 ) {
+
+    if (gameState.phase !== "trade") {
+
+        return;
+
+    }
 
     const territory =
         territories[
@@ -917,6 +958,8 @@ function changeResource(
     territory.resources[
         resourceID
     ] = newAmount;
+
+    playGameSound("resource", 0.55);
 
 
     displayGame();
@@ -1085,6 +1128,9 @@ function buyManufacturedGood(
 
     if (refreshDisplay) {
 
+        coinClinkSound.currentTime = 0;
+        coinClinkSound.play().catch(() => {});
+
         displayGame();
 
     }
@@ -1198,7 +1244,6 @@ function produceResources() {
             territories[
                 territoryID
             ];
-
 
         const productionForLevel =
             territory.productionByLevel[
@@ -1507,6 +1552,8 @@ function consumeResources() {
                 territoryID
             ];
 
+        const wasUnrestful = territory.unrest;
+
 
         const needs =
             developmentNeeds[
@@ -1576,6 +1623,12 @@ function consumeResources() {
 
             territory.unrest =
                 true;
+
+            if (!wasUnrestful) {
+
+                playGameSound("unrest", 0.55);
+
+            }
 
         }
 
@@ -1742,6 +1795,8 @@ function developTerritory(
 
 
     territory.development++;
+
+    playGameSound("develop");
 
 
     displayGame();
@@ -2072,13 +2127,6 @@ function buildProductionReport(
 
             ${reportHTML}
 
-
-            <div class="report-line">
-
-                Sell goods to Britain during the Trade Phase to earn income.
-
-            </div>
-
         </div>
 
     `;
@@ -2310,15 +2358,47 @@ const territoryEmblems = {
     goldCoast: `<svg viewBox="0 0 24 24"><path d="M3 19h18M5 19V9l7-5 7 5v10M8 19v-5h3v5m3-8h2m-7-4h2m5 1h1"/><path d="M3 9h18"/></svg>`
 };
 
-const territoryBriefings = {
-    india: "India is a huge place with many languages, religions and ways of life. The East India Company controlled large areas, while Indian rulers still led many kingdoms.",
-    canada: "Many Indigenous nations lived across the land now called Canada. British colonies were growing too, and in 1837 some people rebelled against British rule.",
-    ceylon: "Ceylon is the name people used for Sri Lanka, a small island with many communities and traditions. The British took control of the island's last independent kingdom in 1815.",
-    jamaica: "Jamaica's sugar plantations were built on the forced labour of enslaved Africans. Slavery had been declared over, but in 1837 many people were still forced to work as apprentices.",
-    australia: "Aboriginal and Torres Strait Islander peoples have lived on and cared for these lands for countless generations. British settlers took more land, bringing great hardship and violence.",
-    newZealand: "Māori iwi and hapū—kinship groups and communities—led life across Aotearoa. British settlers were arriving, and the Treaty of Waitangi was signed in 1840.",
-    egypt: "Egypt wouldn't actually be occupied by Britain until 1882, but in 1837 it was led by Muhammad Ali. He was a powerful ruler, and Egypt was still part of the Ottoman Empire.",
-    goldCoast: "The Gold Coast was a stretch of West African coastline, home to many different peoples and kingdoms. The Asante Kingdom was a powerful neighbour inland, while British merchants built forts by the sea."
+const territoryDescriptions = {
+    india: {
+        continent: "Asia",
+        status: "British Raj",
+        environment: "Monsoon plains and forests grow cotton, tea, rice and spices."
+    },
+    canada: {
+        continent: "North America",
+        status: "Dominion",
+        environment: "Vast forests and fertile plains are rich in timber, wheat and wildlife."
+    },
+    ceylon: {
+        continent: "Asia",
+        status: "Crown colony",
+        environment: "Tropical hills and plains grow tea, rice and spices."
+    },
+    jamaica: {
+        continent: "North America · Caribbean",
+        status: "Crown colony",
+        environment: "Warm, fertile land is well suited to sugar cane, coffee and tropical fruits."
+    },
+    australia: {
+        continent: "Oceania",
+        status: "Dominion",
+        environment: "Wide grasslands and woodlands support sheep, cattle and grain."
+    },
+    newZealand: {
+        continent: "Oceania",
+        status: "Dominion",
+        environment: "Green grasslands, forests and coasts are rich in wool, timber and fish."
+    },
+    egypt: {
+        continent: "Africa",
+        status: "British protectorate",
+        environment: "The Nile's fertile banks grow cotton, rice and other crops."
+    },
+    goldCoast: {
+        continent: "Africa",
+        status: "Crown colony and protectorate",
+        environment: "Tropical forests and rich soils provide timber, rice and spices."
+    }
 };
 
 function buildTerritoryHeading(id, territory) {
@@ -2406,7 +2486,11 @@ function buildCompactTerritoryCard(
             ${gameState.phase === "territoryBriefing" ? `
 
                 <div class="territory-resource-context">
-                    <p>${territoryBriefings[id]}</p>
+                    <div class="territory-context-facts">
+                        <p><strong>Continent</strong><span>${territoryDescriptions[id].continent}</span></p>
+                        <p><strong>Status</strong><span>${territoryDescriptions[id].status}</span></p>
+                    </div>
+                    <p class="territory-environment">${territoryDescriptions[id].environment}</p>
                 </div>
 
             ` : ""}
@@ -2948,7 +3032,7 @@ function startGame() {
 
     if (
         !Number.isInteger(selectedTeamCount) ||
-        selectedTeamCount < 4 ||
+        selectedTeamCount < 6 ||
         selectedTeamCount > Object.keys(territories).length
     ) {
 
@@ -3969,6 +4053,9 @@ function showTutorial() {
 
 function displayGame() {
 
+    const previousTerritoryScrollLeft =
+        game.querySelector(".territory-card-row")?.scrollLeft || 0;
+
     if (gameState.numberOfTeams === null) {
 
         game.innerHTML = `
@@ -3979,9 +4066,7 @@ function displayGame() {
                 <form onsubmit="startGame(); return false;">
                     <label for="number-of-teams">How many teams are playing?</label>
                     <select id="number-of-teams" name="numberOfTeams">
-                        <option value="4" selected>4 teams</option>
-                        <option value="5">5 teams</option>
-                        <option value="6">6 teams</option>
+                        <option value="6" selected>6 teams</option>
                         <option value="7">7 teams</option>
                         <option value="8">8 teams</option>
                     </select>
@@ -4212,10 +4297,39 @@ function displayGame() {
 
     `;
 
+    const activeTerritoryIDs = getActiveTerritoryIDs();
+    html += `
+        <nav class="territory-overview" aria-label="Territory overview" style="--territory-count: ${activeTerritoryIDs.length}">
+    `;
+
+    for (const id of activeTerritoryIDs) {
+        const territory = territories[id];
+        const unrestLabel = territory.unrest ? ", unrest" : "";
+        html += `
+            <button
+                type="button"
+                class="territory-overview-tile territory-${id}${territory.unrest ? " has-unrest" : ""}"
+                data-territory-nav="${id}"
+                aria-label="Show ${territory.name}${unrestLabel}"
+            >
+                <span class="territory-overview-name">${territory.name}</span>
+                ${territory.unrest ? '<span class="territory-overview-status">UNREST</span>' : ""}
+                <span class="territory-overview-badges">
+                    <span class="territory-overview-badge">£${territory.money}</span>
+                    <span class="territory-overview-badge">Level ${territory.development}</span>
+                </span>
+            </button>
+        `;
+    }
+
+    html += '</nav>';
+
 
     // --------------------------------------------------------
     // TERRITORY CARDS
     // --------------------------------------------------------
+
+    html += '<div class="territory-card-row">';
 
     for (const id of getActiveTerritoryIDs()) {
 
@@ -4242,6 +4356,7 @@ function displayGame() {
                             ? "has-unrest"
                             : ""
                     }"
+                    data-territory-id="${id}"
                 >
 
                     ${buildTerritoryHeading(id, territory)}
@@ -4306,6 +4421,7 @@ function displayGame() {
                             ? "has-unrest"
                             : ""
                     }"
+                    data-territory-id="${id}"
                 >
 
                     ${buildTerritoryHeading(id, territory)}
@@ -4373,6 +4489,8 @@ function displayGame() {
     }
 
 
+    html += '</div>';
+
     html += `
 
         <div class="britain-wealth-card">
@@ -4391,6 +4509,40 @@ function displayGame() {
 
     game.innerHTML =
         html;
+
+    const territoryCardRow =
+        game.querySelector(".territory-card-row");
+
+    if (territoryCardRow) {
+        territoryCardRow.scrollLeft = previousTerritoryScrollLeft;
+    }
+
+    game.querySelectorAll("[data-territory-nav]").forEach((tile) => {
+        tile.addEventListener("click", () => {
+            const card = game.querySelector(
+                `[data-territory-id="${tile.dataset.territoryNav}"]`
+            );
+
+            card?.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+                inline: "start"
+            });
+        });
+    });
+
+    const phaseActionButton =
+        game.querySelector("#phase-action-button");
+
+    if (phaseActionButton) {
+
+        phaseActionButton.addEventListener(
+            "click",
+            () => playGameSound("action", 0.2),
+            { capture: true }
+        );
+
+    }
 
 
     // --------------------------------------------------------
