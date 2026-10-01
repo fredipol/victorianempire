@@ -4298,40 +4298,14 @@ function displayGame() {
     `;
 
     const activeTerritoryIDs = getActiveTerritoryIDs();
-    html += `
-        <nav class="territory-overview" aria-label="Territory overview" style="--territory-count: ${activeTerritoryIDs.length}">
-    `;
-
-    for (const id of activeTerritoryIDs) {
-        const territory = territories[id];
-        const unrestLabel = territory.unrest ? ", unrest" : "";
-        html += `
-            <button
-                type="button"
-                class="territory-overview-tile territory-${id}${territory.unrest ? " has-unrest" : ""}"
-                data-territory-nav="${id}"
-                aria-label="Show ${territory.name}${unrestLabel}"
-            >
-                <span class="territory-overview-name">${territory.name}</span>
-                ${territory.unrest ? '<span class="territory-overview-status">UNREST</span>' : ""}
-                <span class="territory-overview-badges">
-                    <span class="territory-overview-badge">£${territory.money}</span>
-                    <span class="territory-overview-badge">Level ${territory.development}</span>
-                </span>
-            </button>
-        `;
-    }
-
-    html += '</nav>';
-
-
     // --------------------------------------------------------
     // TERRITORY CARDS
     // --------------------------------------------------------
 
-    html += '<div class="territory-card-row">';
+    const territoryColumns = Math.ceil(activeTerritoryIDs.length / 2);
+    html += `<div class="territory-card-row" style="--territory-columns: ${territoryColumns}">`;
 
-    for (const id of getActiveTerritoryIDs()) {
+    for (const id of activeTerritoryIDs) {
 
         const territory =
             territories[
@@ -4516,20 +4490,6 @@ function displayGame() {
     if (territoryCardRow) {
         territoryCardRow.scrollLeft = previousTerritoryScrollLeft;
     }
-
-    game.querySelectorAll("[data-territory-nav]").forEach((tile) => {
-        tile.addEventListener("click", () => {
-            const card = game.querySelector(
-                `[data-territory-id="${tile.dataset.territoryNav}"]`
-            );
-
-            card?.scrollIntoView({
-                behavior: "smooth",
-                block: "nearest",
-                inline: "start"
-            });
-        });
-    });
 
     const phaseActionButton =
         game.querySelector("#phase-action-button");
