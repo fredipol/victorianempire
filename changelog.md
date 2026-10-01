@@ -2,6 +2,10 @@
 
 Notable project changes, recorded with the date they were made.
 
+## 2026-10-01
+
+- Restored Production income: each territory now earns £1 for every resource unit actually produced, including the reduction from unrest. The Production report shows the income earned.
+
 ## 2026-09-23
 
 - Fixed the Reflection phase instruction check in `app.js` to match the lowercase `reflection` phase value. The phase now displays “Review What Happened.”

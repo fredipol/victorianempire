@@ -104,8 +104,10 @@ Each round currently follows these phases:
 
 The teacher presses **PRODUCE**.
 
-Every territory produces its configured production quantities. Production
-adds goods to the territory's stock but does not add money.
+Every territory produces its configured production quantities. Each
+resource unit produced also adds £1 to that territory's money. The income
+is based on the amount actually produced, so unrest reduces both resource
+production and production income.
 
 If a territory has unrest, its production is currently halved.
 
@@ -297,8 +299,9 @@ Selling one unit to Britain adds its price to the territory's money.
 
 ## 6. Money and Income
 
-Territories earn money by selling resources to Britain during the Trade
-Phase. Production itself adds resources but does not generate money.
+Territories earn £1 for every resource unit they produce during the
+Production Phase. They can earn additional money by selling resources to
+Britain during the Trade Phase.
 
 When a territory sells a resource:
 

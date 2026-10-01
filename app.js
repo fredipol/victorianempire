@@ -1292,6 +1292,9 @@ function produceResources() {
                 amountProduced
             );
 
+            // Production adds £1 of income for every resource unit made.
+            territory.money += amountProduced;
+
 
         }
 
@@ -1458,7 +1461,8 @@ function findMostAbundantResource(
 function consumeResourceType(
     territoryID,
     resourceType,
-    amountRequired
+    amountRequired,
+    resourcePriority = null
 ) {
 
     const territory =
@@ -1475,7 +1479,10 @@ function consumeResourceType(
         amountStillNeeded > 0
     ) {
 
-        const resourceID =
+        const prioritizedResourceID = resourcePriority?.find(
+            (id) => (territory.resources[id] || 0) > 0
+        );
+        const resourceID = prioritizedResourceID ||
             findMostAbundantResource(
                 territory,
                 resourceType
@@ -1573,7 +1580,8 @@ function consumeResources() {
             consumeResourceType(
                 territoryID,
                 "manufactured",
-                needs.manufactured
+                needs.manufactured,
+                ["textiles", "machinery"]
             );
 
 
@@ -2070,6 +2078,11 @@ function buildProductionReport(
             territoryID
         ] || {};
 
+    const productionIncome = Object.values(changes).reduce(
+        (total, amount) => total + Math.max(amount, 0),
+        0
+    );
+
 
     for (
         const resourceID
@@ -2126,6 +2139,10 @@ function buildProductionReport(
 
 
             ${reportHTML}
+
+            <div class="report-line money-generated">
+                <strong>Production income:</strong> £${productionIncome}
+            </div>
 
         </div>
 
@@ -3248,7 +3265,7 @@ const tutorialSteps = [
     },
     {
         title: "Money",
-        text: "Money helps your team trade. Spend it to buy made goods, or earn money by selling resources to Britain.",
+        text: "Your team earns £1 for every resource unit produced each round. You can earn extra money by selling resources to Britain, then use your money to buy goods or develop your territory.",
         target: ".money-row",
         kind: "next"
     },
