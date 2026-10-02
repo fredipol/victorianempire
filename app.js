@@ -2423,6 +2423,11 @@ function buildTerritoryHeading(id, territory) {
         <h2>
             <span class="territory-emblem" aria-hidden="true">${territoryEmblems[id]}</span>
             <span>${territory.name}</span>
+            <span class="territory-money-badge" aria-label="Money: £${territory.money}">
+                ${gameState.phase === "trade" ? `<button type="button" aria-label="Decrease money" onclick="changeMoney('${id}', -1)">−</button>` : ""}
+                <strong>£${territory.money}</strong>
+                ${gameState.phase === "trade" ? `<button type="button" aria-label="Increase money" onclick="changeMoney('${id}', 1)">+</button>` : ""}
+            </span>
         </h2>
     `;
 }
@@ -2553,44 +2558,6 @@ function buildCompactTerritoryCard(
             `
                     : ""
             }
-
-
-            <!-- MONEY -->
-
-            <div class="resource-row money-row">
-
-                <span>
-                    ${gameState.phase === "territoryBriefing" ? "Starting money" : "Money"}
-                </span>
-
-
-                <span>
-
-                    ${gameState.phase === "trade" ? `
-
-                    <button onclick="changeMoney('${id}', -1)">
-                        −
-                    </button>
-
-                    ` : ""}
-
-
-                    <strong>
-                        £${territory.money}
-                    </strong>
-
-
-                    ${gameState.phase === "trade" ? `
-
-                    <button onclick="changeMoney('${id}', 1)">
-                        +
-                    </button>
-
-                    ` : ""}
-
-                </span>
-
-            </div>
 
 
             ${gameState.phase === "reflection" ? `
@@ -3266,7 +3233,7 @@ const tutorialSteps = [
     {
         title: "Money",
         text: "Your team earns £1 for every resource unit produced each round. You can earn extra money by selling resources to Britain, then use your money to buy goods or develop your territory.",
-        target: ".money-row",
+        target: ".territory-money-badge",
         kind: "next"
     },
     {
@@ -4068,6 +4035,19 @@ function showTutorial() {
 }
 
 
+async function toggleFullscreen() {
+    try {
+        if (document.fullscreenElement) {
+            await document.exitFullscreen();
+        } else {
+            await document.documentElement.requestFullscreen();
+        }
+    } catch (error) {
+        console.warn("Full screen mode could not be changed.", error);
+    }
+}
+
+
 function displayGame() {
 
     const previousTerritoryScrollLeft =
@@ -4118,6 +4098,9 @@ function displayGame() {
                 `
                         : ""
                 }
+            </div>
+
+            <div class="tracker-action">
                 <div class="tracker-utility-buttons">
                     <button
                         type="button"
@@ -4135,10 +4118,19 @@ function displayGame() {
                     >
                         HOW TO PLAY
                     </button>
+                    <button
+                        type="button"
+                        id="toggle-fullscreen"
+                        class="tracker-tutorial-button tracker-fullscreen-button"
+                        aria-label="Toggle full screen"
+                        title="Toggle full screen"
+                        onclick="toggleFullscreen()"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M3 9V4a1 1 0 0 1 1-1h5M15 3h5a1 1 0 0 1 1 1v5M21 15v5a1 1 0 0 1-1 1h-5M9 21H4a1 1 0 0 1-1-1v-5" />
+                        </svg>
+                    </button>
                 </div>
-            </div>
-
-            <div class="tracker-action">
 
     `;
 

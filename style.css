@@ -126,26 +126,49 @@ body {
 
 .tracker-utility-buttons {
     display: flex;
-    justify-content: center;
-    gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
 }
 
 .tracker-tutorial-button {
-    margin-top: 5px;
-    padding: 8px 12px;
-    border: 1px solid #bdc8c8;
-    border-radius: 8px;
-    background: rgba(243, 239, 230, 0.65);
-    color: #53646a;
+    margin-top: 0;
+    padding: 7px 10px;
+    border: 1px solid rgba(186, 198, 205, 0.28);
+    border-radius: 5px;
+    background: transparent;
+    color: #bac6cd;
     font: inherit;
-    font-size: 0.7rem;
-    font-weight: 900;
-    letter-spacing: 0.06em;
+    font-size: 0.68rem;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
     cursor: pointer;
 }
 
 .tracker-tutorial-button:hover {
-    background: #f3efe6;
+    border-color: rgba(186, 198, 205, 0.55);
+    background: rgba(186, 198, 205, 0.08);
+    color: #e7edf0;
+}
+
+.tracker-fullscreen-button {
+    display: inline-grid;
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    place-items: center;
+    padding: 4px;
+}
+
+.tracker-fullscreen-button svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: square;
 }
 
 .tutorial-overlay {
@@ -475,11 +498,17 @@ body {
 
 .tracker-action {
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     justify-content: flex-end;
+    gap: 4px;
+    width: max-content;
+    justify-self: end;
 }
 
 
-.tracker-action button {
+.tracker-action #phase-action-button {
+    width: 100%;
     min-width: 160px;
 
     padding:
@@ -522,12 +551,12 @@ body {
 }
 
 
-.tracker-action button:hover {
+.tracker-action #phase-action-button:hover {
     background: #203b50;
 }
 
 
-.tracker-action button:active {
+.tracker-action #phase-action-button:active {
     transform: translateY(3px);
 
     box-shadow:
@@ -1655,7 +1684,7 @@ button:focus-visible {
         padding: 10px 12px;
     }
 
-    .tracker-action button {
+    .tracker-action #phase-action-button {
         min-width: 135px;
         padding: 11px 12px;
         font-size: 0.95rem;
@@ -1725,7 +1754,7 @@ button:focus-visible {
         font-size: 0.8rem;
     }
 
-    .tracker-action button {
+    .tracker-action #phase-action-button {
         min-width: 0;
         padding: 9px 12px;
         font-size: 0.82rem;
@@ -1860,7 +1889,7 @@ body {
 .game-setup form button,
 .tutorial-dismiss,
 .tutorial-back,
-.tracker-action button {
+.tracker-action #phase-action-button {
     background: #31536a;
     border-color: #66849a;
     color: #f5f7f8;
@@ -1869,7 +1898,7 @@ body {
 .game-setup form button:hover,
 .tutorial-dismiss:hover,
 .tutorial-back:hover:not(:disabled),
-.tracker-action button:hover {
+.tracker-action #phase-action-button:hover {
     background: #3c657f;
 }
 
@@ -2145,7 +2174,7 @@ body {
     font-weight: 750;
 }
 
-.tracker-action button {
+.tracker-action #phase-action-button {
     min-width: 190px;
     padding: 16px 24px;
     border-color: #f0ce88;
@@ -2158,7 +2187,7 @@ body {
     box-shadow: 0 3px 0 #977742, 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.tracker-action button:hover {
+.tracker-action #phase-action-button:hover {
     background: #f0ce88;
 }
 
@@ -2177,7 +2206,7 @@ body {
     font-size: 1.25rem;
 }
 
-.tracker-action button:active {
+.tracker-action #phase-action-button:active {
     box-shadow: 0 0 0 #977742, 0 2px 4px rgba(0, 0, 0, 0.16);
 }
 
@@ -2405,7 +2434,7 @@ body {
 }
 
 @media (max-width: 1100px) {
-    .tracker-action button {
+    .tracker-action #phase-action-button {
         min-width: 150px;
         padding: 13px 16px;
         font-size: 1rem;
@@ -2413,7 +2442,7 @@ body {
 }
 
 @media (max-width: 650px) {
-    .tracker-action button {
+    .tracker-action #phase-action-button {
         min-width: 0;
         padding: 11px 13px;
         font-size: 0.9rem;
@@ -2671,7 +2700,7 @@ body {
     font-weight: 700;
 }
 
-.tracker-action button {
+.tracker-action #phase-action-button {
     min-width: 220px;
     min-height: 76px;
     padding: 18px 28px;
@@ -2682,18 +2711,18 @@ body {
     letter-spacing: 0.025em;
 }
 
-.tracker-action button:hover {
+.tracker-action #phase-action-button:hover {
     box-shadow: 0 5px 0 #9a7135, 0 10px 22px rgba(0, 0, 0, 0.3);
     transform: translateY(-1px);
 }
 
-.tracker-action button:active {
+.tracker-action #phase-action-button:active {
     box-shadow: 0 1px 0 #9a7135, 0 3px 7px rgba(0, 0, 0, 0.22);
     transform: translateY(4px);
 }
 
 @media (max-width: 650px) {
-    .tracker-action button {
+    .tracker-action #phase-action-button {
         min-width: 0;
         min-height: 60px;
         padding: 12px 16px;
@@ -2820,4 +2849,89 @@ body {
 .territory .purchase-section button {
     min-height: 40px;
     padding: 8px 11px;
+}
+
+/* Compact, secondary controls above the primary phase action. */
+.tracker-utility-buttons {
+    width: 100%;
+    gap: 6px;
+}
+
+.tracker-utility-buttons .tracker-tutorial-button {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+    padding: 7px 10px;
+    border: 1px solid rgba(186, 198, 205, 0.28);
+    border-radius: 5px;
+    background: transparent;
+    color: #bac6cd;
+    font-size: 0.68rem;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    box-shadow: none;
+}
+
+.tracker-utility-buttons .tracker-tutorial-button:hover {
+    border-color: rgba(186, 198, 205, 0.55);
+    background: rgba(186, 198, 205, 0.08);
+    color: #e7edf0;
+    box-shadow: none;
+    transform: none;
+}
+
+.tracker-utility-buttons .tracker-fullscreen-button {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 26px;
+    padding: 4px;
+}
+
+.territory-money-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 8px;
+    border: 2px solid var(--territory-accent);
+    border-radius: 50%;
+    background: var(--territory-accent);
+    color: #17212a;
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 1.15rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.territory-money-badge strong {
+    font-weight: 900;
+}
+
+.territory-money-badge button {
+    display: inline-grid;
+    width: 26px;
+    height: 26px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(23, 33, 42, 0.5);
+    border-radius: 50%;
+    background: rgba(23, 33, 42, 0.1);
+    color: #17212a;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.territory-money-badge button:hover {
+    background: rgba(23, 33, 42, 0.2);
+}
+
+.territory-card-row > .territory h2 {
+    padding-right: 62px;
+    padding-left: 62px;
 }
