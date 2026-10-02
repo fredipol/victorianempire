@@ -2570,7 +2570,7 @@ function buildCompactTerritoryCard(
 
 
             ${gameState.phase === "territoryBriefing" ? "" : `
-            <div class="resource-totals-section">
+            <div class="resource-totals-section ${gameState.phase === "trade" ? "trade-resource-totals" : ""}">
 
             <!-- RESOURCE TOTALS -->
 
@@ -2590,8 +2590,13 @@ function buildCompactTerritoryCard(
                 return `
                     <div class="need-row need-${category}"
                         aria-label="${label}: ${amount} of ${required} required">
-                        <span class="need-label">${label}</span>
-                        <strong class="need-amount">${amount}<span aria-hidden="true"> / </span>${required}</strong>
+                        ${gameState.phase === "trade" ? `
+                            <strong class="need-amount">${amount}<span aria-hidden="true"> / </span>${required}</strong>
+                            <span class="need-label">${category === "manufactured" ? "Goods" : label}</span>
+                        ` : `
+                            <span class="need-label">${label}</span>
+                            <strong class="need-amount">${amount}<span aria-hidden="true"> / </span>${required}</strong>
+                        `}
                     </div>
                 `;
             }).join("")}
